@@ -104,10 +104,7 @@ class Server(metaclass=ServerMaker):
 
     def process_client_message(self, message, client):
         logger.debug(f'Разбор сообщения от клиента : {message}')
-        # Если это сообщение о присутствии, принимаем и отвечаем
         if ACTION in message and message[ACTION] == PRESENCE and TIME in message and USER in message:
-            # Если такой пользователь ещё не зарегистрирован, регистрируем,
-            # иначе отправляем ответ и завершаем соединение.
             if message[USER][ACCOUNT_NAME] not in self.names.keys():
                 self.names[message[USER][ACCOUNT_NAME]] = client
                 send_message(client, RESPONSE_200)
